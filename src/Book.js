@@ -1,21 +1,34 @@
-import React from 'react'
+import React, { Component } from 'react'
 import BookShelfChanger from './BookShelfChanger'
 
-const Book = ({ book }) => {
-  const authors = book.authors.map(author => (<div key={author}>{author}</div>))
+class Book extends Component {
+  constructor(props) {
+    super(props)
 
-  return (
-    <li>
-      <div className="book">
-        <div className="book-top">
-          <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
-          <BookShelfChanger shelfSelected={book.shelf}/>
+    this.state = { book: props.book }
+    this.handleShelfChange = this.handleShelfChange.bind(this)
+  }
+
+  handleShelfChange(shelfSelected) {
+    this.props.moveBookToAnotherShelf(this.state.book, shelfSelected)
+  }
+
+  render() {
+    const authors = this.state.book.authors.map(author => (<div key={author}>{author}</div>))
+
+    return (
+      <li>
+        <div className="book">
+          <div className="book-top">
+            <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url(${this.state.book.imageLinks.thumbnail})` }}></div>
+            <BookShelfChanger shelfSelected={this.state.book.shelf} handleShelfChange={this.handleShelfChange} />
+          </div>
+          <div className="book-title">{this.state.book.title}</div>
+          <div className="book-authors">{authors}</div>
         </div>
-        <div className="book-title">{book.title}</div>
-        <div className="book-authors">{authors}</div>
-      </div>
-    </li>
-  )
+      </li>
+    )
+  }
 }
 
 export default Book

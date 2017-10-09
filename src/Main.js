@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import BookShelf from './BookShelf'
+//import _ from 'lodash'
 
 class Main extends Component {
   constructor(props) {
     super(props)
 
     this.state = { books: [] }
+    this.moveBookToAnotherShelf = this.moveBookToAnotherShelf.bind(this)
   }
 
   componentDidMount() {
@@ -15,6 +17,15 @@ class Main extends Component {
     .then(books => this.setState({ books }))
   }
 
+  moveBookToAnotherShelf(book, shelf) {
+    BooksAPI.update(book, shelf)
+    .then(response => BooksAPI.get(book.id))
+    .then(bookUpdated => {
+      let books = this.state.books.filter(book => book.id !== bookUpdated.id)
+      books.push(bookUpdated)
+      this.setState({ books })
+    })
+  }
 
   render() {
     const shelfTypes = {
@@ -34,9 +45,9 @@ class Main extends Component {
         </div>
         <div className="list-books-content">
           <div>
-            <BookShelf key="reading" title="Currently Reading" books={booksCurrentlyReading} />
-            <BookShelf key="to-read" title="Want to Read" books={booksWantToRead} />
-            <BookShelf key="read" title="Read" books={booksRead} />
+            <BookShelf key="reading" title="Currently Reading" books={booksCurrentlyReading} moveBookToAnotherShelf={this.moveBookToAnotherShelf}/>
+            <BookShelf key="to-read" title="Want to Read" books={booksWantToRead} moveBookToAnotherShelf={this.moveBookToAnotherShelf}/>
+            <BookShelf key="read" title="Read" books={booksRead} moveBookToAnotherShelf={this.moveBookToAnotherShelf}/>
           </div>
         </div>
         <div className="open-search">
