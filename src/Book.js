@@ -14,7 +14,8 @@ class Book extends Component {
   }
 
   render() {
-    const authors = this.state.book.authors.map(author => (<div key={author}>{author}</div>))
+    let authors = this.state.book.authors
+    authors = (authors) ? authors.map(author => (<div key={author}>{author}</div>)) : []
 
     return (
       <li>
