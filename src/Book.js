@@ -21,7 +21,7 @@ class Book extends Component {
       <li>
         <div className="book">
           <div className="book-top">
-            <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url(${this.state.book.imageLinks.thumbnail})` }}></div>
+            <div className="book-cover" style={{ backgroundImage: `url(${this.state.book.imageLinks.thumbnail})` }}></div>
             <BookShelfChanger shelfSelected={this.state.book.shelf} handleShelfChange={this.handleShelfChange} />
           </div>
           <div className="book-title">{this.state.book.title}</div>
