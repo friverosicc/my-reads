@@ -16,12 +16,13 @@ class Book extends Component {
   render() {
     let authors = this.state.book.authors
     authors = (authors) ? authors.map(author => (<div key={author}>{author}</div>)) : []
+    const coverImage = this.state.book.imageLinks.thumbnail
 
     return (
       <li>
         <div className="book">
           <div className="book-top">
-            <div className="book-cover" style={{ backgroundImage: `url(${this.state.book.imageLinks.thumbnail})` }}></div>
+            <div className="book-cover" style={{ backgroundImage: `url(${coverImage})` }}></div>
             <BookShelfChanger shelfSelected={this.state.book.shelf} handleShelfChange={this.handleShelfChange} />
           </div>
           <div className="book-title">{this.state.book.title}</div>
