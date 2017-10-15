@@ -23,8 +23,7 @@ class BooksApp extends Component {
     .then(response => BooksAPI.get(book.id))
     .then(bookUpdated => {
       let books = this.state.books.filter(book => book.id !== bookUpdated.id)
-      books.push(bookUpdated)
-      this.setState({ books })
+      this.setState({ books: [...books, bookUpdated] })
     })
   }
 
