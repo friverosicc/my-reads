@@ -13,18 +13,18 @@ class Book extends Component {
   }
 
   render() {
-    let authors = this.props.book.authors
+    let { title, shelf, authors, imageLinks } = this.props.book
     authors = (authors) ? authors.map(author => (<div key={author}>{author}</div>)) : []
-    const coverImage = this.props.book.imageLinks.thumbnail
+    const coverImage = imageLinks ? imageLinks.thumbnail : "http://via.placeholder.com/128x193?text=No%20Cover"
 
     return (
       <li>
         <div className="book">
           <div className="book-top">
             <div className="book-cover" style={{ backgroundImage: `url(${coverImage})` }}></div>
-            <BookShelfChanger shelfSelected={this.props.book.shelf} handleShelfChange={this.handleShelfChange} />
+            <BookShelfChanger shelfSelected={shelf} handleShelfChange={this.handleShelfChange} />
           </div>
-          <div className="book-title">{this.props.book.title}</div>
+          <div className="book-title">{title}</div>
           <div className="book-authors">{authors}</div>
         </div>
       </li>
