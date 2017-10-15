@@ -26,8 +26,10 @@ constructor(props) {
   }
 
   booksSearch(query) {
-    BooksAPI.search(query, 30) 
-    .then(books => this.setShelfOfEachBook(books, this.props.booksInShelves))
+    if (!_.isEmpty(query)) {
+      BooksAPI.search(query, 30)
+      .then(books => this.setShelfOfEachBook(books, this.props.booksInShelves))
+    }
   }
 
   setShelfOfEachBook(books, booksInShelves) {
